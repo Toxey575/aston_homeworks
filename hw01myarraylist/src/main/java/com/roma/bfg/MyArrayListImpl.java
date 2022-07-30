@@ -1,6 +1,6 @@
 package com.roma.bfg;
 
-public class MyArrayListImpl<E> implements MyArrayList<E>{
+public class MyArrayListImpl<E> implements MyArrayList<E> {
 
     private static final int DEFAULT_SIZE = 10;
 
@@ -8,7 +8,7 @@ public class MyArrayListImpl<E> implements MyArrayList<E>{
     private int size;
 
     public MyArrayListImpl() {
-        this.elements = (E[])new Object[DEFAULT_SIZE];
+        this.elements = (E[]) new Object[DEFAULT_SIZE];
         this.size = 0;
     }
 
@@ -29,7 +29,7 @@ public class MyArrayListImpl<E> implements MyArrayList<E>{
                 this.add(element);
                 return;
             }
-            for (int i = size - 1; i > index; i--) {
+            for (int i = size - 1; i >= index; i--) {
                 if (isFull()) {
                     resize();
                 }
@@ -65,6 +65,7 @@ public class MyArrayListImpl<E> implements MyArrayList<E>{
     public E set(int index, E element) {
         if (index >= 0 && index < size) {
             this.elements[index] = element;
+            return element;
         }
 
         return null;
@@ -149,10 +150,14 @@ public class MyArrayListImpl<E> implements MyArrayList<E>{
     private void resize() {
         E[] oldElements = this.elements;
 
-        this.elements =(E[])new Object[oldElements.length + oldElements.length / 2];
+        this.elements = (E[]) new Object[oldElements.length + oldElements.length / 2];
         for (int i = 0; i < size; i++) {
             this.elements[i] = oldElements[i];
         }
+    }
+
+    private E getLastElement() {
+        return elements[size - 1];
     }
 
     private boolean isFull() {
